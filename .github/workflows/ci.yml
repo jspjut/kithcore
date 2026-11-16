@@ -1,0 +1,48 @@
+name: Engine and included world
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: node tools/check-source.mjs
+      - run: npm ci
+      - run: npm test
+      - run: npm run test:minimal
+      - run: npm run world:check
+      - run: npm run package:release
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps firefox
+      - run: xvfb-run -a npm run test:live:browser
+        env:
+          HEADED: '1'
+      - run: xvfb-run -a npm run test:browser
+        env:
+          BROWSER: firefox
+          HEADED: '1'
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - run: docker compose build
+      - run: docker compose up -d --wait
+      - run: curl --fail http://127.0.0.1:3080/ready
+      - if: always()
+        run: docker compose down

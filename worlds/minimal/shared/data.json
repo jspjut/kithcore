@@ -1,0 +1,852 @@
+{
+  "zone": {
+    "name": "Meadow Vale",
+    "radius": 80,
+    "spawn": {
+      "x": 0,
+      "z": 12
+    },
+    "bounds": {
+      "minX": -80,
+      "maxX": 80,
+      "minZ": -80,
+      "maxZ": 80
+    },
+    "layoutRevision": 2,
+    "maxPlayers": 16
+  },
+  "levelXP": [
+    0,
+    0,
+    100,
+    280
+  ],
+  "items": {
+    "training_blade": {
+      "name": "Training blade",
+      "icon": "\u2694",
+      "slot": "weapon",
+      "quality": "common",
+      "power": 0,
+      "appearance": {
+        "model": "sword",
+        "style": "iron",
+        "main": "#bbc4cb",
+        "trim": "#947951",
+        "detail": "#464d50"
+      },
+      "description": "A simple practice weapon.",
+      "sell": 2,
+      "allowedClasses": [
+        "adventurer"
+      ]
+    },
+    "linen_coat": {
+      "name": "Cloth tunic",
+      "slot": "armor",
+      "armorType": "cloth",
+      "quality": "common",
+      "armor": 0,
+      "appearance": {
+        "model": "coat",
+        "style": "cloth",
+        "main": "#667f9c",
+        "trim": "#d1bb84",
+        "detail": "#43556a"
+      },
+      "description": "A plain tunic.",
+      "sell": 2
+    },
+    "practice_blade": {
+      "name": "Balanced practice blade",
+      "icon": "\u2694",
+      "slot": "weapon",
+      "quality": "uncommon",
+      "power": 3,
+      "appearance": {
+        "model": "sword",
+        "style": "iron",
+        "main": "#bcd3ce",
+        "trim": "#c4a04e",
+        "detail": "#415c54"
+      },
+      "description": "A reward for your first fights.",
+      "sell": 4,
+      "allowedClasses": [
+        "adventurer"
+      ]
+    },
+    "potion": {
+      "name": "Healing tonic",
+      "quality": "common",
+      "consumable": true,
+      "price": 3,
+      "sell": 1,
+      "description": "Restores 80 health."
+    },
+    "leaf": {
+      "name": "Meadow herb",
+      "quality": "common",
+      "sell": 1,
+      "description": "An ordinary herb."
+    },
+    "resin": {
+      "name": "Practice token",
+      "quality": "common",
+      "sell": 2,
+      "description": "A token left by a practice slime."
+    },
+    "training_staff": {
+      "name": "Practice staff",
+      "icon": "\u2694",
+      "slot": "weapon",
+      "quality": "common",
+      "power": 0,
+      "appearance": {
+        "model": "staff",
+        "style": "iron",
+        "main": "#7e91bf",
+        "trim": "#947951",
+        "detail": "#464d50"
+      },
+      "description": "A simple practice weapon.",
+      "sell": 2,
+      "allowedClasses": [
+        "scholar"
+      ]
+    },
+    "practice_staff": {
+      "name": "Balanced practice staff",
+      "icon": "\u2694",
+      "slot": "weapon",
+      "quality": "common",
+      "power": 3,
+      "appearance": {
+        "model": "staff",
+        "style": "iron",
+        "main": "#a3b7d6",
+        "trim": "#947951",
+        "detail": "#464d50"
+      },
+      "description": "A simple practice weapon.",
+      "sell": 2,
+      "allowedClasses": [
+        "scholar"
+      ]
+    },
+    "training_robe": {
+      "name": "Apprentice robe",
+      "slot": "armor",
+      "armorType": "cloth",
+      "quality": "common",
+      "armor": 0,
+      "appearance": {
+        "model": "coat",
+        "style": "cloth",
+        "main": "#7484b0",
+        "trim": "#d1bb84",
+        "detail": "#43556a"
+      },
+      "description": "A plain tunic.",
+      "sell": 2
+    },
+    "sample_bag": {
+      "name": "Small travel bag",
+      "quality": "common",
+      "bagSlots": 6,
+      "price": 6,
+      "sell": 1,
+      "description": "Equip this bag for six more inventory slots."
+    }
+  },
+  "skills": {
+    "strike": {
+      "name": "Strike",
+      "key": "1",
+      "level": 1,
+      "cost": 12,
+      "cooldown": 3,
+      "range": 3.6,
+      "description": "Strike for the example adventure.",
+      "classId": "adventurer",
+      "iconId": "strike",
+      "damage": 14
+    },
+    "bolt": {
+      "name": "Practice Bolt",
+      "key": "2",
+      "level": 1,
+      "cost": 18,
+      "cooldown": 5,
+      "range": 18,
+      "description": "Practice Bolt for the example adventure.",
+      "classId": "adventurer",
+      "iconId": "strike",
+      "damage": 16,
+      "castTime": 1
+    },
+    "mend": {
+      "name": "First Aid",
+      "key": "3",
+      "level": 2,
+      "cost": 20,
+      "cooldown": 8,
+      "range": 20,
+      "description": "First Aid for the example adventure.",
+      "classId": "adventurer",
+      "iconId": "strike",
+      "heal": 55,
+      "castTime": 1.5
+    },
+    "burst": {
+      "name": "Sweep",
+      "key": "4",
+      "level": 3,
+      "cost": 25,
+      "cooldown": 10,
+      "range": 6,
+      "description": "Sweep for the example adventure.",
+      "classId": "adventurer",
+      "iconId": "strike",
+      "damage": 25,
+      "area": true
+    },
+    "guard": {
+      "name": "Guard",
+      "key": "7",
+      "level": 3,
+      "cost": 20,
+      "cooldown": 15,
+      "range": 0,
+      "description": "Guard for the example adventure.",
+      "classId": "adventurer",
+      "iconId": "strike",
+      "shield": 50
+    },
+    "finish": {
+      "name": "Strong Strike",
+      "key": "8",
+      "level": 3,
+      "cost": 25,
+      "cooldown": 8,
+      "range": 3.6,
+      "description": "Strong Strike for the example adventure.",
+      "classId": "adventurer",
+      "iconId": "strike",
+      "damage": 35
+    },
+    "recall": {
+      "name": "Return Home",
+      "key": "=",
+      "level": 1,
+      "cost": 0,
+      "cooldown": 900,
+      "range": 0,
+      "castTime": 8,
+      "travel": true,
+      "triggersGCD": false,
+      "description": "Return to your bound waypoint."
+    },
+    "spark": {
+      "name": "Spark",
+      "key": "1",
+      "level": 1,
+      "cost": 18,
+      "cooldown": 2,
+      "range": 23,
+      "description": "Spark demonstrates the Scholar class.",
+      "classId": "scholar",
+      "iconId": "lance",
+      "damage": 17,
+      "castTime": 1.2
+    },
+    "frostbolt": {
+      "name": "Frost Bolt",
+      "key": "2",
+      "level": 1,
+      "cost": 18,
+      "cooldown": 5,
+      "range": 22,
+      "description": "Frost Bolt demonstrates the Scholar class.",
+      "classId": "scholar",
+      "iconId": "frost",
+      "damage": 11,
+      "castTime": 0,
+      "slow": 0.45
+    },
+    "restore": {
+      "name": "Restore",
+      "key": "3",
+      "level": 2,
+      "cost": 20,
+      "cooldown": 8,
+      "range": 20,
+      "description": "Restore demonstrates the Scholar class.",
+      "classId": "scholar",
+      "iconId": "sigil",
+      "heal": 52,
+      "castTime": 1.5
+    },
+    "pulse": {
+      "name": "Arcane Pulse",
+      "key": "4",
+      "level": 3,
+      "cost": 25,
+      "cooldown": 10,
+      "range": 22,
+      "description": "Arcane Pulse demonstrates the Scholar class.",
+      "classId": "scholar",
+      "iconId": "starfall",
+      "damage": 25,
+      "area": true,
+      "targetArea": true,
+      "radius": 6,
+      "castTime": 1.3
+    },
+    "barrier": {
+      "name": "Ward",
+      "key": "7",
+      "level": 3,
+      "cost": 20,
+      "cooldown": 15,
+      "range": 0,
+      "description": "Ward demonstrates the Scholar class.",
+      "classId": "scholar",
+      "iconId": "prism",
+      "shield": 65
+    },
+    "starbolt": {
+      "name": "Star Bolt",
+      "key": "8",
+      "level": 3,
+      "cost": 25,
+      "cooldown": 8,
+      "range": 23,
+      "description": "Star Bolt demonstrates the Scholar class.",
+      "classId": "scholar",
+      "iconId": "arc-chain",
+      "damage": 45,
+      "castTime": 1.6
+    }
+  },
+  "classes": {
+    "adventurer": {
+      "id": "adventurer",
+      "name": "Adventurer",
+      "armor": "plate",
+      "resource": "Energy",
+      "color": "#d8b76c",
+      "role": "Sample adventurer",
+      "description": "A small set of abilities for learning the engine.",
+      "skills": [
+        "strike",
+        "bolt",
+        "mend",
+        "burst",
+        "guard",
+        "finish"
+      ],
+      "autoRange": 3.6,
+      "health": 120,
+      "healthPerLevel": 28,
+      "starterWeapon": "training_blade",
+      "starterArmor": "linen_coat",
+      "playstyle": "Close with a training blade, use a ranged bolt to begin a fight, and recover with first aid.",
+      "weaponLabel": "Blade"
+    },
+    "scholar": {
+      "id": "scholar",
+      "name": "Scholar",
+      "armor": "cloth",
+      "resource": "Mana",
+      "color": "#a8bfe5",
+      "role": "Sample ranged caster",
+      "description": "Study protective wards, restorative magic and ranged spellcasting.",
+      "playstyle": "Stay at range, cast a spark or frost bolt, and protect yourself with a ward.",
+      "weaponLabel": "Staff",
+      "skills": [
+        "spark",
+        "frostbolt",
+        "restore",
+        "pulse",
+        "barrier",
+        "starbolt"
+      ],
+      "autoRange": 18,
+      "health": 105,
+      "healthPerLevel": 25,
+      "starterWeapon": "training_staff",
+      "starterArmor": "training_robe"
+    }
+  },
+  "races": {
+    "human": {
+      "id": "human",
+      "name": "Human",
+      "classes": [
+        "adventurer",
+        "scholar"
+      ],
+      "description": "Adaptable travelers with a wide variety of appearances and training.",
+      "tradition": "You can replace this definition in your own world."
+    },
+    "harefolk": {
+      "id": "harefolk",
+      "name": "Harefolk",
+      "classes": [
+        "adventurer",
+        "scholar"
+      ],
+      "description": "Long-eared meadow folk with soft fur and a small round tail.",
+      "tradition": "Both sample schools welcome every traveler.",
+      "nameplateHeight": 3.2,
+      "preview": {
+        "bodyFocus": 1.4,
+        "bodyDistance": 6,
+        "faceFocus": 2.2,
+        "faceDistance": 2.7
+      }
+    }
+  },
+  "npcs": [
+    {
+      "id": "guide",
+      "name": "Guide",
+      "title": "Start here",
+      "role": "quest",
+      "services": [
+        "inn",
+        "waypoint"
+      ],
+      "x": 0,
+      "z": 8,
+      "mapId": "meadow",
+      "factionId": "neighbors",
+      "look": "hearth",
+      "color": 10138990
+    },
+    {
+      "id": "merchant",
+      "name": "Supplier",
+      "title": "Tonics and supplies",
+      "role": "merchant",
+      "services": [
+        "merchant"
+      ],
+      "x": 8,
+      "z": 8,
+      "mapId": "meadow",
+      "factionId": "neighbors",
+      "look": "grove",
+      "color": 11191158
+    },
+    {
+      "id": "banker",
+      "name": "Keeper",
+      "title": "Your personal vault",
+      "role": "banker",
+      "services": [
+        "bank"
+      ],
+      "x": -8,
+      "z": 8,
+      "mapId": "meadow",
+      "factionId": "neighbors",
+      "look": "ash",
+      "color": 9075364
+    },
+    {
+      "id": "herbalist",
+      "name": "Willow Tender",
+      "title": "Willow rest",
+      "role": "quest",
+      "services": [
+        "inn",
+        "waypoint"
+      ],
+      "x": -44,
+      "z": -8,
+      "mapId": "meadow",
+      "factionId": "neighbors",
+      "look": "grove",
+      "color": 10138990
+    },
+    {
+      "id": "warden",
+      "name": "Ridge Warden",
+      "title": "Ridgewatch camp",
+      "role": "quest",
+      "services": [
+        "inn",
+        "waypoint"
+      ],
+      "x": 28,
+      "z": -46,
+      "mapId": "meadow",
+      "factionId": "neighbors",
+      "look": "ash",
+      "color": 10138990
+    }
+  ],
+  "quests": [
+    {
+      "id": "first_steps",
+      "title": "Your first steps",
+      "giver": "guide",
+      "turnIn": "guide",
+      "kind": "explore",
+      "target": "practice-marker",
+      "count": 1,
+      "xp": 100,
+      "gold": 5,
+      "minLevel": 1,
+      "requires": [],
+      "location": {
+        "x": 0,
+        "z": -8
+      },
+      "radius": 4,
+      "text": "Welcome! Walk to the blue marker north of here, then return to me. Move with WASD; click a person to interact.",
+      "objective": "Visit the blue practice marker",
+      "complete": "You found your way. Try a creature encounter or gather some herbs next.",
+      "rewardCount": 1
+    },
+    {
+      "id": "practice_fight",
+      "title": "A little practice",
+      "giver": "guide",
+      "turnIn": "guide",
+      "kind": "kill",
+      "target": "slime",
+      "count": 2,
+      "xp": 100,
+      "gold": 8,
+      "minLevel": 2,
+      "requires": [
+        "first_steps"
+      ],
+      "reward": "practice_blade",
+      "text": "Defeat two practice slimes in the northern field. Click one, then use Attack or press 1 to strike.",
+      "objective": "Defeat practice slimes",
+      "complete": "Well done. Here is an improved practice blade. Your world can define different creatures, rewards and skills.",
+      "rewardCount": 1,
+      "rewardsByClass": {
+        "adventurer": "practice_blade",
+        "scholar": "practice_staff"
+      }
+    },
+    {
+      "id": "gather_herbs",
+      "title": "A useful handful",
+      "giver": "guide",
+      "turnIn": "guide",
+      "kind": "gather",
+      "target": "herb",
+      "count": 2,
+      "xp": 80,
+      "gold": 5,
+      "minLevel": 2,
+      "requires": [
+        "first_steps"
+      ],
+      "text": "Gather from two different herb patches in the western meadow. Walk close and click a patch.",
+      "objective": "Gather herbs from two patches",
+      "complete": "Thank you! You have tried exploration, combat and gathering. This small world is yours to extend.",
+      "rewardCount": 1
+    },
+    {
+      "id": "willow_welcome",
+      "title": "A welcome under the willows",
+      "giver": "guide",
+      "turnIn": "herbalist",
+      "kind": "explore",
+      "target": "herbalist-arrival",
+      "count": 1,
+      "xp": 20,
+      "gold": 2,
+      "minLevel": 1,
+      "requires": [
+        "first_steps"
+      ],
+      "location": {
+        "x": -44,
+        "z": -8
+      },
+      "radius": 5,
+      "text": "Follow the western path to Willow rest. Willow Tender can show you the herb clearing; Reedwater Hollows lie just south of camp.",
+      "objective": "Visit Willow rest",
+      "complete": "Welcome to Willow rest. Herbs grow beyond the trees to the northwest. The reed pools south of the commons are a quiet place to explore.",
+      "rewardCount": 1
+    },
+    {
+      "id": "ridge_hello",
+      "title": "News for Ridgewatch",
+      "giver": "herbalist",
+      "turnIn": "warden",
+      "kind": "explore",
+      "target": "warden-arrival",
+      "count": 1,
+      "xp": 20,
+      "gold": 2,
+      "minLevel": 1,
+      "requires": [
+        "willow_welcome"
+      ],
+      "location": {
+        "x": 28,
+        "z": -46
+      },
+      "radius": 5,
+      "text": "Take the hillside trail northeast to Ridgewatch camp. Say hello to the warden; there is no parcel to carry and no hurry.",
+      "objective": "Visit Ridgewatch camp",
+      "complete": "Good to see a neighbor. The cairns ahead mark our practice grounds. The chalk quarry below to the southeast has more slimes and an abandoned work yard.",
+      "rewardCount": 1
+    }
+  ],
+  "enemyTypes": {
+    "slime": {
+      "name": "Practice slime",
+      "hp": 55,
+      "damage": 5,
+      "speed": 2,
+      "xp": 15,
+      "gold": 2,
+      "loot": "resin",
+      "lootChance": 1,
+      "respawn": 20,
+      "level": 1,
+      "aggro": 0,
+      "color": 7913081
+    }
+  },
+  "enemySpawns": [
+    {
+      "type": "slime",
+      "x": -7,
+      "z": -17
+    },
+    {
+      "type": "slime",
+      "x": 7,
+      "z": -17
+    },
+    {
+      "type": "slime",
+      "x": 0,
+      "z": -24
+    },
+    {
+      "type": "slime",
+      "x": 37,
+      "z": -59
+    },
+    {
+      "type": "slime",
+      "x": 45,
+      "z": -62
+    },
+    {
+      "type": "slime",
+      "x": 55,
+      "z": -12
+    },
+    {
+      "type": "slime",
+      "x": 61,
+      "z": -19
+    },
+    {
+      "type": "slime",
+      "x": 9,
+      "z": 57
+    }
+  ],
+  "gatherables": [
+    {
+      "id": "herb-west",
+      "type": "herb",
+      "x": -11,
+      "z": -3
+    },
+    {
+      "id": "herb-north",
+      "type": "herb",
+      "x": -15,
+      "z": -10
+    },
+    {
+      "id": "herb-south",
+      "type": "herb",
+      "x": -17,
+      "z": 3
+    },
+    {
+      "id": "grove-herb-a",
+      "type": "herb",
+      "x": -55,
+      "z": -18
+    },
+    {
+      "id": "grove-herb-b",
+      "type": "herb",
+      "x": -61,
+      "z": -24
+    },
+    {
+      "id": "reed-herb-a",
+      "type": "herb",
+      "x": -7,
+      "z": 49
+    },
+    {
+      "id": "reed-herb-b",
+      "type": "herb",
+      "x": 5,
+      "z": 60
+    }
+  ],
+  "resourceTypes": {
+    "herb": {
+      "item": "leaf",
+      "name": "Meadow herb",
+      "tracking": "herbs",
+      "respawn": 45
+    }
+  },
+  "merchantStock": [
+    "potion",
+    "sample_bag"
+  ],
+  "landmarks": [
+    {
+      "id": "camp",
+      "name": "Meadow camp",
+      "subtitle": "A welcome, supplies and a place to rest",
+      "x": 0,
+      "z": 12,
+      "r": 12,
+      "color": "#d6c88b"
+    },
+    {
+      "id": "practice-marker",
+      "name": "Practice marker",
+      "subtitle": "The northern training field",
+      "x": 0,
+      "z": -8,
+      "r": 8
+    },
+    {
+      "id": "willow-rest",
+      "name": "Willow rest",
+      "subtitle": "A shaded quest hub and place to bind your return",
+      "x": -44,
+      "z": -8,
+      "r": 9,
+      "color": "#87af98"
+    },
+    {
+      "id": "ridgewatch",
+      "name": "Ridgewatch camp",
+      "subtitle": "A high camp overlooking the whole vale",
+      "x": 28,
+      "z": -46,
+      "r": 9,
+      "color": "#d2bc8b"
+    },
+    {
+      "id": "herb-clearing",
+      "name": "Willow herb clearing",
+      "subtitle": "Gathering patches beyond the rest stop",
+      "x": -57,
+      "z": -20,
+      "r": 9,
+      "color": "#8ab77e"
+    },
+    {
+      "id": "ridge-cairns",
+      "name": "Sunrise cairns",
+      "subtitle": "Practice creatures above Ridgewatch",
+      "x": 40,
+      "z": -61,
+      "r": 9,
+      "color": "#c2bd9b"
+    },
+    {
+      "id": "chalk-yard",
+      "name": "Old Chalk Quarry",
+      "subtitle": "Abandoned tools and practice slimes",
+      "x": 55,
+      "z": -14,
+      "r": 11,
+      "color": "#b3b0a2"
+    },
+    {
+      "id": "reed-pools",
+      "name": "Reedwater pools",
+      "subtitle": "Reeds, herbs and a quiet southern hollow",
+      "x": 0,
+      "z": 55,
+      "r": 12,
+      "color": "#78b4b4"
+    }
+  ],
+  "colliders": [
+    {
+      "id": "practice-crate",
+      "minX": 11,
+      "maxX": 13,
+      "minZ": -1,
+      "maxZ": 1,
+      "minY": 0,
+      "maxY": 1,
+      "standable": true
+    }
+  ],
+  "mailboxes": [
+    {
+      "id": "meadow-mail",
+      "name": "Meadow post",
+      "type": "mailbox",
+      "x": -7,
+      "z": 12
+    },
+    {
+      "id": "willow-mail",
+      "name": "Willow post",
+      "type": "mailbox",
+      "x": -48,
+      "z": -5
+    },
+    {
+      "id": "ridge-mail",
+      "name": "Ridgewatch post",
+      "type": "mailbox",
+      "x": 23,
+      "z": -44
+    }
+  ],
+  "readables": [
+    {
+      "id": "meadow-guidebook",
+      "storyId": "meadow-guidebook",
+      "title": "Welcome to the meadow",
+      "author": "The camp guide",
+      "x": 5,
+      "z": 12,
+      "pages": [
+        {
+          "heading": "A small adventure",
+          "text": "Speak to Guide for quests. Visit Supplier for tonics and a larger bag. Keeper stores your spare items. The mailbox sends letters and items to other characters."
+        },
+        {
+          "heading": "Make it your own",
+          "text": "Humans and Harefolk can train as Adventurers or Scholars. Change your appearance on the character screen, bind your abilities, and adjust controls from the game menu."
+        },
+        {
+          "heading": "Five corners of the vale",
+          "text": "Meadow Commons is home. West lies Willow Grove, north is Sunrise Ridge, east is the Old Chalk Quarry and south are Reedwater Hollows. Paths connect three rest stops. Ask Guide about Willow rest after your first steps; Willow Tender will point you toward Ridgewatch."
+        }
+      ]
+    }
+  ]
+}

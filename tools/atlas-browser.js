@@ -1,0 +1,33 @@
+import {firefox} from '@playwright/test';
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {startTestWorld} from './testing.js';
+import {ROOT,selectedWorld} from './worlds.js';
+const before=process.env.ENABLE_DEVELOPER_MODE;process.env.ENABLE_DEVELOPER_MODE='1';let server;try{server=await startTestWorld(process.argv.includes('--world')?selectedWorld():'emberwild');}finally{if(before===undefined)delete process.env.ENABLE_DEVELOPER_MODE;else process.env.ENABLE_DEVELOPER_MODE=before;}
+let browser,page;const errors=[];
+try{
+ await mkdir(path.join(ROOT,'test-results'),{recursive:true});browser=await firefox.launch({headless:process.env.HEADED!=='1',firefoxUserPrefs:{'webgl.force-enabled':true,'gfx.webrender.software':true}});page=await browser.newPage({viewport:{width:1440,height:1000}});page.setDefaultTimeout(30000);page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(server.base+'/developer?debug=1');await page.locator('#name').fill('Atlas Explorer');await page.locator('#join').click();await page.waitForFunction(()=>window.mmoDebug?.state?.self.gameMaster===true);assert.equal(await page.evaluate(()=>window.mmoDebug.state.self.travelUnlocks.length),await page.evaluate(async()=>(await import('/shared/travel-network.js')).TRAVEL_NODES.length));
+ await page.locator('#travel-button').click();await page.locator('#travel-search').fill('Stormcrown');await page.locator('[data-flight-result="stormcrown"]').click();await page.locator('[data-gm-travel="stormcrown"]').click();await page.waitForFunction(()=>window.mmoDebug.state.self.mapId==='stormcrown');await page.locator('#window-travel .window-close').click();
+ await page.keyboard.press('KeyM');await page.locator('#zone-map[data-map-id="stormcrown"]').waitFor();await page.locator('#atlas-up').click();await page.locator('#zone-map[data-map-id="saltwind"]').waitFor();await page.locator('#atlas-up').click();await page.locator('#zone-map[data-map-id="emberwild"]').waitFor();assert.equal(await page.locator('#atlas-regions [data-atlas-map]').count(),5);
+ // Wheel zoom follows the region beneath the cursor; one gesture cannot skip charts.
+ const atlas=page.locator('#zone-map');
+ const pointFor=async id=>page.evaluate(async id=>{const {atlasHit}=await import('/shared/atlas.js'),c=document.querySelector('#zone-map'),r=c.getBoundingClientRect();for(let y=80;y<650;y+=5)for(let x=80;x<920;x+=5)if([[0,0],[-15,0],[15,0],[0,-15],[0,15]].every(([dx,dy])=>atlasHit(c.dataset.mapId,x+dx,y+dy)?.id===id))return {x:r.x+x/1000*r.width,y:r.y+y/720*r.height};throw Error('No hit for '+id);},id);
+ const wheel=async delta=>{await page.mouse.wheel(0,delta);await page.waitForTimeout(100);};
+ let point=await pointFor('dawnlands');await page.mouse.move(point.x,point.y);await wheel(-120);assert.equal(await atlas.getAttribute('data-map-id'),'emberwild');await wheel(-120);assert.equal(await atlas.getAttribute('data-map-id'),'dawnlands');await wheel(-240);assert.equal(await page.evaluate(()=>document.querySelector('#zone-map').atlasView.scale),1);
+ await page.waitForTimeout(250);point=await pointFor('hazelwash');await page.mouse.move(point.x,point.y);await wheel(-240);assert.equal(await atlas.getAttribute('data-map-id'),'hazelwash');
+ await page.waitForTimeout(250);await wheel(-240);assert.ok(await page.evaluate(()=>document.querySelector('#zone-map').atlasView.scale>2));
+ const prePan=await page.evaluate(()=>({...document.querySelector('#zone-map').atlasView}));await page.mouse.down();await page.mouse.move(point.x-50,point.y-40,{steps:5});await page.mouse.up();assert.notDeepEqual(await page.evaluate(()=>document.querySelector('#zone-map').atlasView),prePan);assert.equal(await page.evaluate(()=>getSelection().toString()),'');
+ await wheel(240);await wheel(240);assert.equal(await atlas.getAttribute('data-map-id'),'dawnlands');await wheel(240);assert.equal(await atlas.getAttribute('data-map-id'),'dawnlands');await page.waitForTimeout(250);await wheel(240);assert.equal(await atlas.getAttribute('data-map-id'),'emberwild');await page.waitForTimeout(250);await wheel(240);assert.equal(await atlas.getAttribute('data-map-id'),'emberwild');
+ const regionIds=['emberwild','dawnlands','greenward','crownspine','lantern-marches','saltwind','worldanvil','sylvarin','cinderwood','alderhaven','hazelwash','redgranite','ochretrail','saltmeadow'];
+ for(const id of regionIds){await page.evaluate(async id=>{const {ui}=await import('/main.js');ui.showAtlas(id);},id);await page.waitForTimeout(100);
+  const result=await page.evaluate(async id=>{const {chartBackground}=await import('/cartography.js'),{ATLAS_MAPS}=await import('/shared/atlas.js');const chart=chartBackground(id);return {boxes:JSON.parse(chart.dataset.labelBoxes),expected:ATLAS_MAPS[id].labels.length};},id);
+  assert.equal(result.boxes.length,result.expected,`All names should fit on ${id}`);for(let i=0;i<result.boxes.length;i++)for(let j=i+1;j<result.boxes.length;j++){const a=result.boxes[i],b=result.boxes[j];assert.ok(!(a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y),`Overlapping names on ${id}`);}
+  await page.screenshot({path:path.join(ROOT,`test-results/atlas-${id}.png`)});await page.locator('#zone-map').screenshot({path:path.join(ROOT,`test-results/atlas-map-${id}.png`)});
+ }
+ await page.keyboard.press('Escape');await page.locator('#main-menu-button').click();await page.locator('[data-logout]').click();await page.locator('#login').waitFor();await page.locator('#join').click();await page.waitForFunction(()=>window.mmoDebug?.state?.self.gameMaster&&window.mmoDebug.state.self.mapId==='stormcrown');
+ await page.goto(server.base+'/?debug=1');await page.locator('#name').fill('Ordinary Atlas');await page.locator('#join').click();await page.waitForFunction(()=>window.mmoDebug?.state?.self&&!window.mmoDebug.state.self.gameMaster);assert.equal(await page.locator('[data-gm-travel]').count(),0);assert.ok(await page.evaluate(()=>window.mmoDebug.state.self.travelUnlocks.length<52));
+ assert.deepEqual(errors,[]);await writeFile(path.join(ROOT,'test-results/atlas-developer-results.json'),JSON.stringify({regions:5,nonOverlappingNames:true,terrainIllustrations:true,gmCreatedThroughDeveloperEntry:true,allRoutesUnlocked:true,instantExplore:true,gmRestored:true,separateNormalRoster:true,errors},null,2));console.log('Regional atlas and developer entry passed.');
+}catch(error){console.error(errors,server.logs);await page?.screenshot({path:path.join(ROOT,'test-results/atlas-developer-failure.png')}).catch(()=>{});throw error;}
+finally{await browser?.close();await server.stop();}

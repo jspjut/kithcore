@@ -1,0 +1,6 @@
+export const UI_CONFIG={tagline:'A SMALL WORLD TO BUILD ON',region:'Meadow Vale',home:'Meadow camp',peopleLabel:'People of the meadow',entryLabel:'the meadow',welcome:'Welcome to the meadow.',lobbyFocus:[0,1.6,10],questRing:{x:0,z:8}};
+export const raceTraits={human:'Human features, with varied skin tones, hairstyles and builds.',harefolk:'Long upright ears, softly tinted fur and a small round tail.'};
+export const classStories={adventurer:{fantasy:'Meet danger with a blade, a steady guard and practical first aid.',playstyle:'Fight up close, draw enemies with a practice bolt, and use first aid or a guard to recover.',weapon:'Blade'},scholar:{fantasy:'Learn the patterns behind sparks, frost, wards and restorative magic.',playstyle:'Cast from range. Some spells need time to complete; wards and healing help when a creature closes in.',weapon:'Staff'}};
+export const showQuestRing=p=>!p?.quests?.first_steps;
+export const trackerEmpty=p=>({title:Object.keys(p.quests||{}).length>=3?'A good beginning':'Your adventure starts here',text:'Speak to Guide at the camp for work. Supplier sells supplies, Keeper stores spare items, and the mailbox sends letters and parcels.'});
+export const npcGreeting=()=> 'Welcome to the camp. How can I help?';

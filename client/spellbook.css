@@ -1,0 +1,35 @@
+#window-spellbook{height:550px}
+#window-spellbook .window-content{display:flex;flex-direction:column;gap:9px;flex:1;overflow:hidden;padding:12px}
+#window-spellbook .book-tabs{flex-shrink:0;margin:0;padding:0 2px;height:35px;gap:4px}
+#window-spellbook .book-tabs button{padding:7px 13px}
+.book-toolbar{display:flex;align-items:center;gap:12px;flex-shrink:0;height:30px}
+.book-search-wrap{position:relative;flex:1;min-width:0;height:100%}
+#book-search{box-sizing:border-box;width:100%;height:100%;padding:5px 27px 5px 9px;border:1px solid #9c8054;border-radius:3px;background:#f5e6bb77;color:#46351f;font:12px Georgia;outline-offset:2px}
+#book-search::-webkit-search-cancel-button{display:none}
+#book-search::placeholder{color:#816b48}
+[data-book-clear]{position:absolute;right:4px;top:2px;height:25px;width:23px;color:#695235;font-size:19px;padding:0}
+.book-locked-option{display:flex;align-items:center;gap:6px;white-space:nowrap;font-size:12px;color:#624a2d;cursor:pointer}
+.book-locked-option input{accent-color:#55734f}
+.book-audience-row{display:flex;align-items:center;gap:9px;height:26px;flex-shrink:0;color:#715736;font-size:12px}
+#book-audience{max-width:100%;flex:1;min-width:0;padding:3px 6px;height:26px;border:1px solid #a58b5d;border-radius:3px;background:#dfc99c;color:#4b3924;font:12px Georgia}
+.ability-book-grid{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:8px;flex:1;min-height:0}
+#window-spellbook .book-ability{display:flex;align-items:center;gap:9px;min-height:0;min-width:0;padding:6px 8px;text-align:left;overflow:hidden;border:1px solid #a28a5d66;border-radius:3px;background:#bda57822;color:#402e1c;user-select:none;touch-action:none;cursor:pointer}
+#window-spellbook .book-ability:hover,#window-spellbook .book-ability:focus-visible{background:#f4e2af88;border-color:#9b7844;outline-offset:-2px}
+#window-spellbook .book-ability.unlearned{opacity:.55;filter:grayscale(.6);cursor:help}
+.book-ability-icon{display:flex;flex-shrink:0;width:36px;height:36px;border:1px solid #9e875a;border-radius:3px;overflow:hidden;background:#3b5243}
+.book-ability-icon .game-icon,.book-ability-icon .emote-glyph{height:100%;width:100%;border:0;border-radius:0;font-size:25px}
+#window-spellbook .book-ability-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+#window-spellbook .book-ability-copy strong{display:block;font:14px/1.15 Georgia;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#window-spellbook .book-ability-copy strong small{display:inline;margin:0;font:10px Arial;color:#7c6544}
+#window-spellbook .book-ability-copy>span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font:11px/1.3 Georgia;color:#6b5436}
+#window-spellbook .book-ability-copy em{font:10px/1.1 Arial;color:#795b37;margin:0}
+.book-empty-slot{min-width:0;min-height:0;border:1px solid #a88d592b;border-radius:3px;background:#9c7d4310}
+.book-no-results{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;text-align:center;pointer-events:none;background:#dfcda0bb;font:16px Georgia;color:#644c2f;margin:0!important}
+.book-no-results small{font:12px Georgia;margin-top:10px}
+.book-pagination{display:flex;align-items:center;justify-content:space-between;flex-shrink:0;height:34px;gap:8px}
+.book-pagination .game-button{min-width:95px;padding:5px 12px}
+.book-pagination .game-button:disabled{opacity:.4;cursor:default}
+#book-page-status{text-align:center;font:13px Georgia;color:#644a2b}
+#book-page-status small{display:block;font:10px Arial;color:#89704a;margin-top:2px}
+#window-spellbook .book-shortcuts{flex-shrink:0;margin:0!important;text-align:center;font:11px/1.3 Georgia;color:#80643e}
+@media(max-width:700px){#window-spellbook .book-ability{gap:6px;padding:5px}.book-ability-icon{height:30px;width:30px}#window-spellbook .book-ability-copy strong{font-size:12px}.book-toolbar{gap:6px}.book-locked-option{font-size:11px}}

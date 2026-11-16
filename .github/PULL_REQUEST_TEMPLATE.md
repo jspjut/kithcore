@@ -1,0 +1,1 @@
+Describe the problem and resulting behavior, relevant engine/world compatibility, and validation performed. List migrations or live-update implications if applicable. Credit external sources/licenses and disclose significant generated material. Do not include private saves, secrets or generated build outputs.

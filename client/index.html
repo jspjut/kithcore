@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#152925">
+  <title>KithCore</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/ui.css">
+  <link rel="stylesheet" href="/rarities.css">
+  <link rel="stylesheet" href="/atlas.css">
+  <script type="importmap">{"imports":{"three":"/vendor/three/three.module.js"}}</script>
+  <link rel="stylesheet" href="/modern.css">
+  <link rel="stylesheet" href="/roster.css">
+  <link rel="stylesheet" href="/social.css">
+  <link rel="stylesheet" href="/spellbook.css">
+  <link rel="stylesheet" href="/chat-panel.css">
+</head>
+<body>
+  <canvas id="world" aria-label="3D game world"></canvas>
+  <div id="labels"></div><div id="floaters"></div><div id="vignette"></div>
+  <main id="login">
+    <div class="login-top"><span class="brand-mark">✦</span> A WORLD AT FIRST LIGHT <span>PLAYABLE ALPHA · 0.1</span></div>
+    <div class="character-screen">
+      <section class="login-copy">
+        <div class="eyebrow">STARTING REGION</div><h1>KithCore</h1>
+        <div class="roster-heading"><h2>Your characters</h2><span id="roster-count">0 / 12</span></div>
+        <ol id="character-list" aria-label="Saved characters"></ol>
+        <p id="roster-empty">Your first story starts here.<br>Choose a race and class to enter the world.</p>
+        <button id="new-character" class="roster-new" type="button">＋ New character</button>
+        <button id="customize-character" class="text-button" type="button">Customize appearance</button>
+        <p class="roster-hint">Drag characters to reorder, or use the arrows.</p>
+        <form id="join-form">
+          <div id="create-fields"><div class="creation-heading"><h2 id="creation-title">Create a Adventurer</h2><button id="cancel-create" type="button" class="text-button hidden">Cancel</button></div>
+            <div id="character-name-field"><label for="name">CHARACTER NAME</label><input id="name" maxlength="18" minlength="2" placeholder="Choose your name" autocomplete="off" required disabled></div>
+            <div id="identity-fields" class="identity-fields">
+              <fieldset><legend>RACE <span id="chosen-race">Human</span></legend><div id="race-choices" class="identity-choices" aria-label="Race choices"></div></fieldset>
+              <fieldset><legend>CLASS <span id="chosen-class">Adventurer</span></legend><div id="class-choices" class="identity-choices" aria-label="Class choices"></div></fieldset>
+              <p id="race-introduction"></p><p class="identity-hint">Hover or focus an icon to learn more.</p>
+            </div><fieldset><legend>APPEARANCE</legend><div id="look-options"></div></fieldset>
+            <details id="appearance-details"><summary>More appearance options</summary><div id="appearance-controls"></div><button id="randomize-appearance" type="button" class="game-button">Randomize appearance</button></details>
+            <p id="customization-headgear-note" class="creation-class hidden">Headgear is hidden in this preview so you can see your hairstyle.</p>
+            <p class="creation-class" id="creation-class-description"></p>
+          </div>
+          <button class="primary" type="submit" id="join" disabled>Loading characters…</button>
+          <button id="save-character" type="button" class="text-button">Create character without entering</button>
+          <div id="login-error" role="alert"></div><p id="login-status" role="status"></p>
+          <button id="roster-retry" type="button" class="text-button hidden">Retry connection</button>
+        </form>
+      </section>
+      <section class="character-stage" aria-label="Selected character preview">
+        <div class="preview-halo"></div><canvas id="character-preview" aria-label="3D character appearance preview"></canvas>
+        <div class="preview-caption"><span class="eyebrow">YOUR NEXT CHAPTER</span><h2 id="selected-character-name">New Adventurer</h2><p id="selected-character-level">Level 1 · Adventurer</p>
+          <div class="preview-view"><button id="preview-body" type="button" aria-pressed="true">Full body</button><button id="preview-face" type="button" aria-pressed="false">Face</button></div>
+          <div class="preview-controls"><button id="preview-left" aria-label="Rotate preview left">↶</button><span>Drag to rotate · Scroll to zoom</span><button id="preview-right" aria-label="Rotate preview right">↷</button></div>
+        </div>
+      </section>
+    </div>
+    <aside id="creation-tooltip" class="hidden" role="tooltip"></aside>
+    <div class="login-bottom"><span>Characters saved on this server · Remembered by this browser</span><span>PLAYABLE ALPHA · LEVELS 1–3</span></div>
+  </main>
+  <dialog id="delete-character-dialog" aria-labelledby="delete-character-title" aria-describedby="delete-character-description"><h2 id="delete-character-title">Delete <span id="delete-character-name"></span>?</h2><p id="delete-character-description"></p><p id="delete-character-error" role="alert"></p><div><button id="cancel-delete-character" class="game-button">Keep character</button><button id="confirm-delete-character" class="game-button danger">Delete permanently</button></div></dialog>
+  <div id="hud" class="hidden">
+    <header id="topbar"><span class="wordmark">✦ KITHCORE</span><span id="area">CAMP</span><div><span class="live-dot"></span><span id="online">1 adventurer</span><span id="net-stats" title="Network round-trip time and rendering frame rate">— ms · — FPS</span><button id="audio-button" title="Toggle synthesized ambience and sound">♫ OFF</button><button id="main-menu-button" title="Game menu (Esc)" aria-label="Game menu" aria-haspopup="dialog">☰</button><button id="help-button" title="Controls (H)">?</button></div></header>
+    <section id="player-frame" class="unit-frame"><div class="portrait"><svg class="game-icon" viewBox="0 0 64 64"><use href="/icons.svg#portrait"/></svg><span id="level">1</span></div><div class="unit-info"><div class="unit-title"><strong id="player-name"></strong><small id="player-class">ADVENTURER</small></div><div class="bar health"><i id="hp-bar"></i><span id="hp-text"></span></div><div class="bar energy"><i id="energy-bar"></i><span id="energy-text"></span></div></div></section>
+    <section id="target-frame" class="unit-frame hidden"><div class="portrait enemy-portrait"><b id="target-enemy-icon">◈</b><svg id="target-friendly-icon" class="game-icon hidden" viewBox="0 0 64 64"><use href="/icons.svg#portrait"/></svg><span id="target-level"></span></div><div class="unit-info"><div class="unit-title"><strong id="target-name"></strong><small id="target-distance"></small></div><div class="bar health enemy-health"><i id="target-hp"></i><span id="target-hp-text"></span></div><small id="target-status">TAB to cycle targets</small><button id="target-invite" class="hidden">Invite to party</button></div></section>
+    <section id="party-frame" class="hidden"><div class="party-heading">PARTY <button id="party-leave">Leave</button></div><div id="party-members"></div></section>
+    <section id="party-invitation" class="hidden"><strong id="party-invitation-name"></strong><div><button id="party-accept">Accept</button><button id="party-decline">Decline</button></div></section>
+    <aside id="right-rail"><section class="minimap-shell"><div class="minimap-heading"><span>STARTING REGION</span><span>N ↑</span><button id="minimap-tracking-button" title="Minimap tracking" aria-label="Minimap tracking" aria-expanded="false">⌖</button></div><div id="minimap-tracking-menu" class="hidden" role="group" aria-label="Minimap tracking filters"></div><canvas id="minimap" width="220" height="180" title="Open map (M)"></canvas><div class="map-caption"><span id="coords">0, 32</span><div class="minimap-zoom"><button id="minimap-zoom-out" aria-label="Zoom minimap out" title="Zoom out">−</button><span id="minimap-scale">52p</span><button id="minimap-zoom-in" aria-label="Zoom minimap in" title="Zoom in">+</button></div><button id="map-button">Map <kbd>M</kbd></button></div><div id="minimap-objective" class="hidden"><span id="minimap-quest-number"></span><button id="minimap-quest-title" title="View tracked quest"></button><span id="minimap-quest-distance"></span><small id="minimap-quest-guidance"></small></div></section><section id="quest-tracker"><div class="section-label">YOUR JOURNEY <button id="journal-button">J</button></div><div id="quest-content"></div></section></aside>
+    <div id="location-announcement"><small>STARTING REGION</small><strong>camp</strong><span>A light at the edge of the wild</span></div>
+    <div id="toasts" aria-live="polite"></div>
+    <div id="interaction" class="hidden"><kbd>F</kbd><span></span></div>
+    <section id="chat" aria-label="Chat">
+      <div class="chat-title"><strong>CHAT</strong><div><button id="chat-new-whisper" aria-expanded="false" aria-controls="chat-whisper-picker">＋ New whisper</button><button id="chat-emotes-button" title="Open learned emotes">☀ Emotes</button></div><button id="chat-resize" aria-label="Resize chat (drag or use arrow keys)" title="Drag to resize chat">⤢</button></div>
+      <div id="chat-tabs" role="tablist" aria-label="Chat conversations"></div>
+      <div id="chat-messages" role="log" aria-label="Chat messages" aria-live="polite" aria-relevant="additions"></div>
+      <button id="chat-jump" class="hidden">↓ Newer messages</button>
+      <div class="chat-routing"><select id="chat-channel" aria-label="Chat channel"></select><span id="chat-route"></span><button id="chat-write" title="Focus chat">Enter ↵</button></div>
+      <div class="chat-compose"><input id="chat-input" placeholder="Say something, or / for commands…" maxlength="200" aria-label="Chat message"><button id="chat-send">Send</button></div>
+      <div id="chat-suggestions" class="hidden" role="listbox" aria-label="Chat commands and emotes"></div>
+      <div id="chat-whisper-picker" class="hidden"><form id="chat-whisper-form"><div><strong>Start a whisper</strong><button id="chat-whisper-cancel" type="button" aria-label="Close whisper picker">×</button></div><label for="chat-whisper-name">Character name</label><div class="whisper-name-row"><input id="chat-whisper-name" maxlength="18" minlength="2" required autocomplete="off" placeholder="Full name, including spaces"><button type="submit">Open</button></div></form><div id="chat-whisper-people"></div><small>Whispers reach online players anywhere.</small></div>
+    </section>
+    <div id="cast-bar" class="hidden" role="progressbar" aria-label="Spell cast progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="cast-progress"></div><span id="cast-name"></span><span id="cast-time"></span></div>
+    <footer id="action-area">
+      <div id="action-hint">Space jump · Right-click enemy to attack · F interact</div>
+      <div id="xp-track"><div id="xp-bar"></div><span id="xp-text"></span></div>
+      <div id="action-bar-frame"><span class="bar-endcap">✦</span><div id="action-slots"></div><button id="bar-lock" title="Action bar locked. Shift-drag to rearrange." aria-label="Toggle action bar lock">▣</button><span class="bar-endcap">✦</span></div>
+    </footer>
+    <nav id="utility-dock" aria-label="Game windows">
+      <div class="micro-menu"><button id="friends-button" title="Friends and mail" aria-label="Friends and mail">☷<small id="unread-mail" class="hidden"></small></button><button id="character-button" title="Character (C)" aria-label="Character (C)"><svg viewBox="0 0 64 64"><use href="/icons.svg#portrait"/></svg><kbd>C</kbd></button><button id="spellbook-button" title="Spellbook (P)" aria-label="Spellbook (P)"><svg viewBox="0 0 64 64"><use href="/icons.svg#book"/></svg><kbd>P</kbd></button><button id="quest-menu-button" title="Quest Log (L or J)" aria-label="Quest Log (L or J)"><svg viewBox="0 0 64 64"><use href="/icons.svg#scroll"/></svg><kbd>L</kbd></button><button id="map-menu-button" title="World Map (M)" aria-label="World Map (M)"><svg viewBox="0 0 64 64"><use href="/icons.svg#map"/></svg><kbd>M</kbd></button></div>
+      <div id="extra-bag-slots" aria-label="Equipped bag slots"></div>
+      <button id="bag-button" title="Backpack and bags (B)" aria-label="Backpack and bags (B)"><svg viewBox="0 0 64 64"><use href="/icons.svg#bag"/></svg><span id="bag-space">20</span><kbd>B</kbd></button>
+    </nav>
+    <div id="death" class="hidden"><div><div class="eyebrow">EVEN A SPARK CAN RISE AGAIN</div><h2>Your light is not lost.</h2><p>The hearth is waiting. Your items and journey are safe.</p><button id="respawn" class="primary">Return to camp</button></div></div>
+    <div id="disconnected" class="hidden"><h2>The world is out of sight.</h2><p id="disconnect-reason">Connection lost. Your journey is saved.</p><button class="primary" id="reconnect">Reconnect</button><button id="disconnected-logout">Return to title</button></div>
+  </div>
+  <div id="game-menu" class="hidden"><section class="menu-panel" role="dialog" aria-modal="true" aria-labelledby="game-menu-title"><div class="menu-heading"><span>✦ KITHCORE</span><h2 id="game-menu-title">Game menu</h2></div><div id="game-menu-content"></div></section></div>
+  <div id="windows"></div>
+  <div id="map-marker-tooltip" class="hidden" role="tooltip"><strong></strong><span></span></div>
+  <div id="world-sign-tooltip" class="hidden" role="tooltip"><strong></strong><span></span></div>
+  <div id="game-tooltip" class="hidden" role="tooltip"></div>
+  <script type="module" src="/bootstrap.js"></script>
+</body>
+</html>

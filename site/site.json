@@ -1,0 +1,153 @@
+{
+  "title": "KithCore",
+  "eyebrow": "Social-first multiplayer RPG engine",
+  "tagline": "Shared worlds. Room to evolve.",
+  "description": "A social-first multiplayer RPG engine for evolving shared worlds. Build on an authoritative server, a customizable browser client and validated live content updates. Meadow Sample is the included, editable game world.",
+  "accent": "#bfe2c0",
+  "features": [
+    {
+      "title": "Authoritative multiplayer",
+      "text": "Server-owned movement, combat, inventory and quest state. The browser client adds prediction, interpolation, targeting and casting feedback."
+    },
+    {
+      "title": "Social systems first",
+      "text": "NPC gestures and speech, ambient interactions, parties, friends, reputation, public chat, whispers and offline mail with item attachments."
+    },
+    {
+      "title": "Combat, quests and objects",
+      "text": "Data-defined class roles, personal recovery, friendly healing, party recovery and ally shields. Server-owned loot, equipment and bags, quest progress, gathering, readable books, vendors, banking and interactive objects."
+    },
+    {
+      "title": "A client you can make yours",
+      "text": "Character creation, race/class support, maps, windows and settings. Customize the theme and UI behavior or provide a different client entry point."
+    },
+    {
+      "title": "World content stays separate",
+      "text": "Meadow is a small editable example package. Replace its races, classes, scenery and story; larger games can be distributed independently."
+    },
+    {
+      "title": "Deploy and evolve",
+      "text": "Linux-first Node/Docker setup, separate saves, backups and validated additive live content updates. Current alpha: one simulation/store writer per world."
+    },
+    {
+      "title": "Build visuals from source",
+      "text": "Procedural scenery, characters and equipment stay editable. Worlds can supply distinct gear silhouettes and themed palettes; generated art, demo films and website builds stay outside source control."
+    }
+  ],
+  "scenes": [
+    {
+      "id": "camp",
+      "title": "A place to begin",
+      "description": "Meadow camp: quests, supplies, storage and a postbox, with the shared RPG systems behind them.",
+      "x": 0,
+      "z": 10,
+      "distance": 24,
+      "pitch": 0.55,
+      "yaw": -0.65
+    },
+    {
+      "id": "practice",
+      "title": "A compact world with height",
+      "description": "Sunrise Ridge: an elevated rest stop and nearby practice cairns, connected by walkable hillside trails.",
+      "x": 28,
+      "z": -46,
+      "distance": 30,
+      "pitch": 0.6,
+      "yaw": 0.4
+    },
+    {
+      "id": "herbs",
+      "title": "A second place to call home",
+      "description": "Willow rest: a wooded quest hub, herb clearing and breadcrumb toward Ridgewatch.",
+      "x": -44,
+      "z": -8,
+      "distance": 26,
+      "pitch": 0.5,
+      "yaw": -0.8
+    }
+  ],
+  "flyby": {
+    "seconds": 14,
+    "points": [
+      {
+        "camera": [
+          20,
+          30,
+          22
+        ],
+        "look": [
+          0,
+          10
+        ]
+      },
+      {
+        "camera": [
+          -28,
+          14,
+          20
+        ],
+        "look": [
+          -44,
+          -8
+        ]
+      },
+      {
+        "camera": [
+          -46,
+          -32,
+          24
+        ],
+        "look": [
+          -44,
+          -8
+        ]
+      },
+      {
+        "camera": [
+          0,
+          -60,
+          25
+        ],
+        "look": [
+          28,
+          -46
+        ]
+      },
+      {
+        "camera": [
+          58,
+          -36,
+          23
+        ],
+        "look": [
+          50,
+          -10
+        ]
+      },
+      {
+        "camera": [
+          31,
+          48,
+          23
+        ],
+        "look": [
+          0,
+          55
+        ]
+      },
+      {
+        "camera": [
+          -19,
+          49,
+          22
+        ],
+        "look": [
+          0,
+          12
+        ]
+      }
+    ]
+  },
+  "repository": "jspjut/kithcore",
+  "emberwildRepository": "jspjut/emberwild"
+}

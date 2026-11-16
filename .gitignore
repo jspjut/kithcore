@@ -1,0 +1,14 @@
+node_modules/
+data/
+test-results/
+.tools/
+.runtime/
+dist/
+*.log
+.env
+.env.*
+!.env.example
+worlds/emberwild/
+worlds/local/
+/compose.override.yaml
+.site/

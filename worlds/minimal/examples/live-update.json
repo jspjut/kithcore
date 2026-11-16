@@ -1,0 +1,28 @@
+{
+  "id": "meadow-market-day",
+  "worldId": "minimal",
+  "items": {
+    "market_tonic": {"template": "potion", "values": {"name": "Market tonic", "description": "A tonic offered for market day.", "price": 0}}
+  },
+  "abilities": {
+    "market_strike": {"template": "strike", "values": {"name": "Market Strike", "description": "A second practice strike. Drag it from the spellbook to an action slot.", "level": 1, "cost": 0, "damage": 7}}
+  },
+  "enemyTypes": {
+    "market_slime": {"template": "slime", "values": {"name": "Market practice slime", "hp": 500, "aggro": 0, "color": 11914348}}
+  },
+  "npcs": [
+    {"id": "market_guide", "template": "guide", "x": -2, "z": 12, "values": {"name": "Market guide", "title": "A new practice lesson"}},
+    {"id": "market_vendor", "template": "merchant", "x": 2, "z": 12, "values": {"name": "Market vendor", "title": "Market supplies"}}
+  ],
+  "spawns": [{"id": "market_practice", "type": "market_slime", "x": 0, "z": 10}],
+  "quests": [
+    {"id": "market_lesson", "title": "A fresh lesson", "objective": "Use Market Strike", "text": "Try the new strike on the nearby practice slime.", "complete": "You have learned something new.", "giver": "market_guide", "turnIn": "market_guide", "kind": "skill", "target": "market_strike", "classId": "adventurer", "count": 1, "xp": 5, "gold": 1, "reward": "market_tonic"}
+  ],
+  "dialogue": {
+    "guide": {"greeting": "Market day has arrived. Visit the new guide and vendor near camp.", "reply": "Welcome to market day!"},
+    "market_guide": {"greeting": "There is a new lesson for Adventurers today."}
+  },
+  "questText": {"first_steps": {"text": "Visit the blue marker north of camp, then return. Market day has arrived!"}},
+  "merchantStock": ["potion", "sample_bag", "market_tonic"],
+  "announcements": ["Market day is open: new people, a practice slime and an Adventurer ability are available at camp."]
+}

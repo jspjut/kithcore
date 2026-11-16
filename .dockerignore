@@ -1,0 +1,12 @@
+node_modules
+.tools
+data
+test-results
+.runtime
+dist
+.git
+**/.git
+worlds/emberwild
+worlds/local
+.env
+.env.*

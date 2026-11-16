@@ -1,0 +1,14 @@
+:root{--common:var(--rarity-common);--uncommon:var(--rarity-uncommon);--rare:var(--rarity-rare)}
+.quality-common{--item-quality:var(--rarity-common);color:var(--item-quality)}
+.quality-uncommon{--item-quality:var(--rarity-uncommon);color:var(--item-quality)}
+.quality-rare{--item-quality:var(--rarity-rare);color:var(--item-quality)}
+.quality-epic{--item-quality:var(--rarity-epic);color:var(--item-quality)}
+.quality-legendary{--item-quality:var(--rarity-legendary);color:var(--item-quality)}
+.quality-unique{--item-quality:var(--rarity-unique);color:var(--item-quality)}
+:is(.bag-slot,.equipment-slot,.reward-icon,.tooltip-item-icon,.asset-card).common{border-color:var(--rarity-common)}
+:is(.bag-slot,.equipment-slot,.reward-icon,.tooltip-item-icon,.asset-card).uncommon{border-color:var(--rarity-uncommon)}
+:is(.bag-slot,.equipment-slot,.reward-icon,.tooltip-item-icon,.asset-card).rare{border-color:var(--rarity-rare)}
+:is(.bag-slot,.equipment-slot,.reward-icon,.tooltip-item-icon,.asset-card).epic{border-color:var(--rarity-epic)}
+:is(.bag-slot,.equipment-slot,.reward-icon,.tooltip-item-icon,.asset-card).legendary{border-color:var(--rarity-legendary)}
+:is(.bag-slot,.equipment-slot,.reward-icon,.tooltip-item-icon,.asset-card).unique{border-color:var(--rarity-unique)}
+#game-tooltip>strong[class*="quality-"]{color:var(--item-quality)}

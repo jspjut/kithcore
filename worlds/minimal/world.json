@@ -1,0 +1,15 @@
+{
+  "id": "minimal",
+  "name": "Meadow Sample",
+  "version": "0.1.0-alpha.3",
+  "runtimeApi": 1,
+  "license": "MIT",
+  "levelCap": 3,
+  "zoneNames": {
+    "meadow": "Meadow Vale"
+  },
+  "client": {
+    "stylesheet": "/meadow-theme.css",
+    "extension": "/meadow-ui.js"
+  }
+}

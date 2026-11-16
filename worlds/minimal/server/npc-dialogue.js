@@ -1,0 +1,4 @@
+const greetings={guide:'The western trail leads to Willow rest; the uphill path continues to Ridgewatch. Visit the blue marker first if you are just starting out.',herbalist:'Welcome to Willow rest. Herbs grow northwest of here. Follow the hillside path northeast to meet the Ridge Warden.',warden:'Welcome to Ridgewatch. Try the cairn field above camp or explore the chalk quarry downhill to the southeast.',merchant:'Tonics and a spare bag make a walk around the vale more comfortable.',banker:'Leave anything you do not need in your vault before you explore.'};
+export const emoteReply=(npc,p)=>({emote:'nod',speech:`Hello, ${p.name}. There is room for another adventurer.`});
+export const spokenReply=(npc,p)=>({emote:'wave',speech:greetings[npc.id]||`Hello, ${p.name}. Welcome to the vale.`});
+export const npcReaction=(social,p,npc,id,speech)=>speech;

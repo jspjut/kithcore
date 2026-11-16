@@ -1,0 +1,27 @@
+services:
+  game:
+    build: .
+    image: kithcore:0.1.0-alpha.3
+    init: true
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-3080}:3080"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3080
+      WORLD: minimal
+    volumes:
+      - saves:/app/data
+    read_only: true
+    tmpfs:
+      - /app/.runtime:uid=1000,gid=1000,mode=0700
+      - /tmp:uid=1000,gid=1000,mode=0700
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    cpus: 1.0
+    restart: unless-stopped
+    stop_grace_period: 20s
+volumes:
+  saves:

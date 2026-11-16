@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+if command -v node >/dev/null 2>&1; then
+  exec node tools/check-source.mjs
+elif [ -x .tools/node/bin/node ]; then
+  exec .tools/node/bin/node tools/check-source.mjs
+else
+  echo 'Node.js 22+ is required for the source-only commit check.' >&2
+  exit 1
+fi
