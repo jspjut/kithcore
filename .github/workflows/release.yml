@@ -13,6 +13,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     env:
       RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
     steps:
@@ -40,6 +41,7 @@ jobs:
   draft:
     needs: build
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     permissions:
       contents: write
     env:

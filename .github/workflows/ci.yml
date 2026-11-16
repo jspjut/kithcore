@@ -5,6 +5,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     strategy:
       matrix:
         node: [22, 24]
@@ -22,6 +23,7 @@ jobs:
       - run: npm run package:release
   browser:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -29,7 +31,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps firefox
+      - run: npx playwright install --with-deps firefox ffmpeg
       - run: xvfb-run -a npm run test:live:browser
         env:
           HEADED: '1'
@@ -39,6 +41,7 @@ jobs:
           HEADED: '1'
   container:
     runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
       - run: docker compose build

@@ -25,7 +25,7 @@ CI runs the checker independently of hooks. Configure branch protection to requi
 Ordinary gameplay creates its visuals from source factories and does not need pre-exported GLBs/PNGs. For the optional model library, full export verification or world release builds:
 
 ```sh
-npx playwright install --with-deps firefox
+npx playwright install --with-deps firefox ffmpeg
 # Linux with software WebGL / a display-less build runner:
 xvfb-run -a env HEADED=1 LIBGL_ALWAYS_SOFTWARE=1 npm run build:world-assets
 npm run test:emberwild
@@ -39,7 +39,7 @@ Older individual `build:assets` and `preview:assets` commands remain available f
 
 ## Build the websites locally
 
-These are independent static project landing pages, not hosted authoritative game servers. Each has an overview, three source-built interactive scenes, still images and four focused silent WebM demo recordings. Emberwild also offers the complete asset workshop, all curated files and a generated art `.tar.gz`. Scenes run without WebSockets or a backend; demo gameplay is recorded from a disposable server during the build. Scene interaction is opt-in. Videos default to muted, looping autoplay while visible, pause offscreen/when the tab is hidden, and keep native playback controls plus a page-level pause button. Reduced-motion visitors get paused posters unless they explicitly choose playback. The four clips show race/class/appearance customization, a moving camera flyby, actual server combat and looting, and an authored two-NPC exchange using real social events. Build-only staging and temporary servers never change operator saves or normal world behavior. Recording startup is trimmed with Playwright’s bundled FFmpeg (or `FFMPEG_PATH`), and `media/manifest.json` records the verified outcomes.
+These are independent static project landing pages, not hosted authoritative game servers. Each has an overview, three source-built interactive scenes, still images and four focused silent WebM demo recordings. Emberwild also offers the complete asset workshop, all curated files and a generated art `.tar.gz`. Scenes run without WebSockets or a backend; demo gameplay is recorded from a disposable server during the build. Scene interaction is opt-in. Videos default to muted, looping autoplay while visible, pause offscreen/when the tab is hidden, and keep native playback controls plus a page-level pause button. Reduced-motion visitors get paused posters unless they explicitly choose playback. The four clips show race/class/appearance customization, a moving camera flyby, actual server combat and looting, and an authored two-NPC exchange using real social events. Build-only staging and temporary servers never change operator saves or normal world behavior. Recording startup is trimmed with Playwright’s explicitly installed FFmpeg (or `FFMPEG_PATH`), and `media/manifest.json` records the verified outcomes.
 
 From the engine root, after installing Playwright/Firefox:
 
@@ -103,3 +103,5 @@ The engine's `site/site.json` defaults to `jspjut/kithcore` and links to `jspjut
 The intended informational sites are `https://jspjut.github.io/kithcore/` and `https://jspjut.github.io/emberwild/`. No custom domain or CNAME is configured: registration and DNS for kithcore.com / kithcore.org remain a separate maintainer choice. Publishing the source and enabling Pages are still required before these destinations are live.
 
 CI runners are pinned to Ubuntu 24.04 to match the pinned Playwright/Firefox build. Update the runner image and browser automation dependencies together; a moving `ubuntu-latest` can select an unsupported OS.
+
+Install the `ffmpeg` Playwright tool explicitly alongside Firefox for demo-video recording/trimming. The live-update browser fixture uses a ranged variant of its new practice skill so normal creature roaming during earlier UI checks cannot make that unrelated assertion fail. The authored Meadow example keeps its ordinary skill range.

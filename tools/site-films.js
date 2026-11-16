@@ -16,7 +16,7 @@ async function ffmpeg(){
   let entries;try{entries=await readdir(directory);}catch{continue;}
   for(const name of entries.filter(n=>n.startsWith('ffmpeg-')))for(const filename of ['ffmpeg-linux','ffmpeg-mac','ffmpeg-win64.exe']){const binary=path.join(directory,name,filename);try{await access(binary,constants.X_OK);return binary;}catch{}}
  }
- throw Error('FFmpeg is needed to trim demo clips. Install Playwright Firefox (includes FFmpeg), or set FFMPEG_PATH.');
+ throw Error('FFmpeg is needed to trim demo clips. Run npx playwright install firefox ffmpeg, or set FFMPEG_PATH.');
 }
 async function demoServer(world,kind){return startTestWorld(world,{setupRuntime:async runtime=>{
  await cp(path.join(ROOT,'tools/site-demo-fixture.js'),path.join(runtime.directory,'server/site-demo-fixture.js'));
