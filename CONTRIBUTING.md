@@ -28,3 +28,5 @@ Keep rebuildable binary exports out of Git. Emberwild ignores its model/preview/
 Install the local source-only hook with `npm run hooks:install` after cloning; CI also checks staged/source files independently. Generated site/media output is never committed. The recommended clean-clone art command is `npm run build:world-assets`, which rebuilds and verifies the complete library against a disposable server. Do not prune unused/future generators. See `docs/BUILD_AND_PAGES.md` for website builds, full-library invariants and pinned world CI.
 
 Disclose significant AI-generated contributions and identify external sources/licenses in pull requests. Submit only material you have rights to contribute under the applicable MIT license. See [provenance](PROVENANCE.md). Be respectful, explain disagreements and avoid harassment in project discussions.
+
+See [CI policy](docs/CI.md) for fast/selective suites, changes-only nightly verification and complete release gates.

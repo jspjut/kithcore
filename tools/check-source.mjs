@@ -4,7 +4,7 @@ import {readFileSync,statSync,lstatSync} from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 const binary=/\.(?:glb|png|jpe?g|gif|webp|avif|ico|mp4|webm|mov|mp3|wav|ogg|zip|gz|tar|pdf|woff2?|ttf|otf|exe|dll|so|wasm|bin)$/i;
-const generated=/(^|\/)(?:node_modules|\.tools|\.runtime|dist|\.site|test-results|data|backups)(\/|$)|(^|\/)client\/assets\/(?:models\/|previews\/|icons\/|[^/]+\.(?:zip|tar\.gz)$|library-manifest\.json$|catalog\.html$|ITEMIZATION_AND_LEVELING\.md$)/;
+const generated=/(^|\/)(?:node_modules|\.tools|\.runtime|dist|\.site|\.site-media|test-results|data|backups)(\/|$)|(^|\/)client\/assets\/(?:models\/|previews\/|icons\/|[^/]+\.(?:zip|tar\.gz)$|library-manifest\.json$|catalog\.html$|ITEMIZATION_AND_LEVELING\.md$)/;
 export function sourceProblem(file,bytes){
  if(path.basename(file).startsWith('.env')&&path.basename(file)!=='.env.example')return 'operator environment files are private';
  if(generated.test(file))return 'generated/private output belongs outside Git';

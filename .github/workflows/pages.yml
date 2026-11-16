@@ -1,8 +1,33 @@
-name: Build project website
-on:
+name: Build KithCore website
+'on':
   push:
-    branches: [main, master]
+    branches:
+    - main
+    - master
+    paths: &id001
+    - site/**
+    - client/**
+    - shared/**
+    - server/**
+    - docs/**
+    - README.md
+    - LICENSE
+    - PROVENANCE.md
+    - THIRD_PARTY.md
+    - SECURITY.md
+    - CONTRIBUTING.md
+    - .github/workflows/pages.yml
+    - worlds/minimal/**
+    - package*.json
+    - tools/build-site.js
+    - tools/site-media.js
+    - tools/site-films.js
+    - tools/site-demo-fixture.js
+    - tools/site-template.js
+    - tools/worlds.js
+    - tools/serve-static.js
   pull_request:
+    paths: *id001
   workflow_dispatch:
     inputs:
       deploy:
@@ -17,31 +42,45 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm run check:source
-      - run: npm ci
-      - run: npx playwright install --with-deps firefox ffmpeg
-      - run: xvfb-run -a npm run build:site
-        env:
-          EMBERWILD_REPOSITORY: ${{ vars.EMBERWILD_REPOSITORY }}
-          HEADED: '1'
-          LIBGL_ALWAYS_SOFTWARE: '1'
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: .site
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: npm
+    - run: npm run check:source
+    - run: npm ci
+    - uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-${{ runner.arch }}-playwright-${{ hashFiles('package-lock.json') }}
+    - run: npx playwright install --with-deps firefox ffmpeg
+    - run: node tools/site-media.js >> "$GITHUB_OUTPUT"
+      id: media
+    - uses: actions/cache@v4
+      with:
+        path: .site-media
+        key: ${{ runner.os }}-${{ runner.arch }}-site-media-v1-${{ steps.media.outputs.key }}
+    - run: xvfb-run -a node tools/build-site.js --media-cache .site-media
+      env:
+        HEADED: '1'
+        LIBGL_ALWAYS_SOFTWARE: '1'
+      timeout-minutes: 6
+    - uses: actions/upload-pages-artifact@v4
+      with:
+        path: .site
   deploy:
-    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && (vars.ENABLE_PAGES == 'true' || inputs.deploy == true)
-    needs: build
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 10
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && (vars.ENABLE_PAGES == 'true' || inputs.deploy == true)
+    steps:
+    - uses: actions/configure-pages@v5
+    - id: deployment
+      uses: actions/deploy-pages@v4
     permissions:
       contents: read
       pages: write
@@ -49,7 +88,3 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/configure-pages@v5
-      - id: deployment
-        uses: actions/deploy-pages@v4

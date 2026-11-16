@@ -1,0 +1,117 @@
+name: KithCore full verification
+'on':
+  schedule:
+  - cron: 23 7 * * *
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref to verify (blank = current ref)
+        type: string
+        default: ''
+  workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
+        default: ''
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: full-${{ inputs.ref || github.ref }}
+  cancel-in-progress: true
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    outputs:
+      run: ${{ steps.plan.outputs.run }}
+      code: ${{ steps.plan.outputs.code }}
+      browser: ${{ steps.plan.outputs.browser }}
+      art: ${{ steps.plan.outputs.art }}
+      container: ${{ steps.plan.outputs.container }}
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        ref: ${{ inputs.ref || github.sha }}
+        fetch-depth: 0
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+    - id: plan
+      run: node .github/scripts/ci-plan.mjs
+      env:
+        CI_PROJECT: engine
+        CI_MODE: full
+        GITHUB_TOKEN: ${{ github.token }}
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    needs: plan
+    if: needs.plan.outputs.run == 'true'
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        ref: ${{ inputs.ref || github.sha }}
+    - uses: actions/setup-node@v6
+      with:
+        node-version: ${{ matrix.node }}
+        cache: npm
+    - run: npm run check:source
+    - run: npm ci
+    - run: npm test
+    - run: npm run test:minimal
+    - run: npm run world:check
+    - run: npm run package:release
+    strategy:
+      matrix:
+        node:
+        - 22
+        - 24
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    needs: plan
+    if: needs.plan.outputs.run == 'true'
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        ref: ${{ inputs.ref || github.sha }}
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: npm
+    - run: npm ci
+    - uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-${{ runner.arch }}-playwright-${{ hashFiles('package-lock.json') }}
+    - run: npx playwright install --with-deps firefox ffmpeg
+    - run: xvfb-run -a npm run test:live:browser
+      env:
+        HEADED: '1'
+        LIBGL_ALWAYS_SOFTWARE: '1'
+      timeout-minutes: 6
+    - run: xvfb-run -a npm run test:browser
+      env:
+        HEADED: '1'
+        LIBGL_ALWAYS_SOFTWARE: '1'
+      timeout-minutes: 6
+  container:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    needs: plan
+    if: needs.plan.outputs.run == 'true'
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        ref: ${{ inputs.ref || github.sha }}
+    - run: docker compose build
+    - run: docker compose up -d --wait
+    - run: curl --fail http://127.0.0.1:3080/ready
+    - if: always()
+      run: docker compose down

@@ -8,7 +8,7 @@ import {ROOT,RUNTIME_API,loadWorld,listFiles} from './worlds.js';
 
 const engineInputs=['server','shared','client','tools','tests','docs','worlds/minimal','.github','.githooks','site','README.md','RELEASE_NOTES.md','CONTRIBUTING.md','SECURITY.md','PROVENANCE.md','LICENSE','THIRD_PARTY.md','package.json','package-lock.json','start.sh','Dockerfile','compose.yaml','.dockerignore','.gitignore','.gitattributes','.env.example','default-world.json'];
 const worldInputs=['.github','.githooks','site','client','shared','server','tests','tools','docs','game-data','examples','world.json','README.md','RELEASE_NOTES.md','CONTRIBUTING.md','SECURITY.md','PROVENANCE.md','LICENSE','THIRD_PARTY.md','.gitignore','.gitattributes','compose.override.yaml'];
-const forbidden=file=>file.split('/').some(part=>['.git','node_modules','.tools','.runtime','.site','dist','data','test-results','backups'].includes(part)||part.startsWith('.env')&&part!=='.env.example'||part.endsWith('.log'));
+const forbidden=file=>file.split('/').some(part=>['.git','node_modules','.tools','.runtime','.site','.site-media','dist','data','test-results','backups'].includes(part)||part.startsWith('.env')&&part!=='.env.example'||part.endsWith('.log'));
 
 async function copyInputs(source,target,inputs){
   for(const name of inputs){

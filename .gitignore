@@ -12,3 +12,5 @@ worlds/emberwild/
 worlds/local/
 /compose.override.yaml
 .site/
+
+.site-media/

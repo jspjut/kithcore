@@ -105,3 +105,5 @@ The intended informational sites are `https://jspjut.github.io/kithcore/` and `h
 CI runners are pinned to Ubuntu 24.04 to match the pinned Playwright/Firefox build. Update the runner image and browser automation dependencies together; a moving `ubuntu-latest` can select an unsupported OS.
 
 Install the `ffmpeg` Playwright tool explicitly alongside Firefox for demo-video recording/trimming. The live-update browser fixture uses a ranged variant of its new practice skill so normal creature roaming during earlier UI checks cannot make that unrelated assertion fail. The authored Meadow example keeps its ordinary skill range.
+
+Pages now builds only for relevant website/docs/runtime changes. Browser downloads, world exports and source-keyed site media are cached; unchanged media skips recording while current docs/licenses and site behavior are still verified. See [CI policy](CI.md) for full-suite scheduling and cache details.

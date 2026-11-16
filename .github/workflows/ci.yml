@@ -1,51 +1,97 @@
-name: Engine and included world
-on:
+name: Engine quick verification
+'on':
   push:
-  pull_request:
+    branches:
+    - main
+    - master
+  pull_request: {}
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: quick-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
-  test:
+  plan:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
-    strategy:
-      matrix:
-        node: [22, 24]
+    timeout-minutes: 3
+    outputs:
+      run: ${{ steps.plan.outputs.run }}
+      code: ${{ steps.plan.outputs.code }}
+      browser: ${{ steps.plan.outputs.browser }}
+      art: ${{ steps.plan.outputs.art }}
+      container: ${{ steps.plan.outputs.container }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: ${{ matrix.node }}
-          cache: npm
-      - run: node tools/check-source.mjs
-      - run: npm ci
-      - run: npm test
-      - run: npm run test:minimal
-      - run: npm run world:check
-      - run: npm run package:release
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+        fetch-depth: 0
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+    - id: plan
+      run: node .github/scripts/ci-plan.mjs
+      env:
+        CI_PROJECT: engine
+        CI_MODE: quick
+        GITHUB_TOKEN: ${{ github.token }}
+  fast:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: npm
+    - run: npm run check:source
+    - run: npm ci
+    - run: npm test
+    - run: npm run test:minimal
+    - run: npm run world:check
+    - run: npm run package:release
   browser:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 15
+    needs: plan
+    if: needs.plan.outputs.browser == 'true'
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npx playwright install --with-deps firefox ffmpeg
-      - run: xvfb-run -a npm run test:live:browser
-        env:
-          HEADED: '1'
-      - run: xvfb-run -a npm run test:browser
-        env:
-          BROWSER: firefox
-          HEADED: '1'
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: npm
+    - run: npm ci
+    - uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ${{ runner.os }}-${{ runner.arch }}-playwright-${{ hashFiles('package-lock.json') }}
+    - run: npx playwright install --with-deps firefox ffmpeg
+    - run: xvfb-run -a npm run test:live:browser
+      env:
+        HEADED: '1'
+        LIBGL_ALWAYS_SOFTWARE: '1'
+      timeout-minutes: 6
+    - run: xvfb-run -a npm run test:browser
+      env:
+        HEADED: '1'
+        LIBGL_ALWAYS_SOFTWARE: '1'
+      timeout-minutes: 6
   container:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 15
+    needs: plan
+    if: needs.plan.outputs.container == 'true'
     steps:
-      - uses: actions/checkout@v6
-      - run: docker compose build
-      - run: docker compose up -d --wait
-      - run: curl --fail http://127.0.0.1:3080/ready
-      - if: always()
-        run: docker compose down
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - run: docker compose build
+    - run: docker compose up -d --wait
+    - run: curl --fail http://127.0.0.1:3080/ready
+    - if: always()
+      run: docker compose down

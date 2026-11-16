@@ -64,7 +64,8 @@
     "build:world-assets": "node tools/build-world-assets.js --world emberwild",
     "build:site": "node tools/build-site.js",
     "preview:site": "node tools/serve-static.js .site",
-    "content:catalog": "node tools/content-catalog.js"
+    "content:catalog": "node tools/content-catalog.js",
+    "test:emberwild:fast": "node tools/test-world.js --world emberwild --suite fast"
   },
   "dependencies": {
     "three": "0.180.0",
