@@ -14,7 +14,7 @@ The world is assembled at startup. Restart after editing its definitions or engi
 | `DATA_DIR` | `data/<world-id>/` | Private saves, relative to the launcher's working directory when explicitly supplied |
 | `ALLOW_LEGACY_SAVES` | unset | Set exactly `1` to adopt a backed-up, unmarked old character document |
 
-The launcher does not read `.env` into Node's environment. `.env.example` describes Docker Compose interpolation. On Windows use `npm start -- --world emberwild` or set environment variables using your shell's syntax.
+The launcher does not read `.env` into Node's environment. `.env.example` describes Docker Compose interpolation. On Windows use `npm start` for Meadow, or select an independently installed pack with `npm start -- --world <world-id>`. Set environment variables using your shell's syntax.
 
 ## Docker setup
 

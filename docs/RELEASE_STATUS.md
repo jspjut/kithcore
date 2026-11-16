@@ -102,3 +102,5 @@ The naming pass passed 25 engine tests and 6 Meadow campaign/collision tests, bo
 ## Initial publication verification (2026-11-16)
 
 Before the first push, the intermittent socket-suite failure was reproduced with detailed TAP output: the temporary save directory was being removed by an earlier teardown hook while a server was still writing, causing `ENOTEMPTY` and leaving resources open. The test now closes clients and stops the server before deleting its temporary saves, including on failure. This changes test teardown only; gameplay and persistence behavior are unchanged.
+
+The engine-owned Emberwild reference audit corrected the engine and Meadow MIT notices to `KithCore contributors`, updated the provenance wording, removed old launcher variable branding and made the general Windows deployment example use Meadow. Remaining references are intentional: optional world installation/build/test/release integrations, cross-project documentation/site links, retained save/browser identity examples and the documented legacy `emberwildDebug` alias used by existing world tools. Emberwild's own project and procedural art notices remain `Emberwild contributors`.
